@@ -8,26 +8,21 @@ use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use BackedEnum;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
-    // protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-    // protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::User;
-
+    protected static string|null|BackedEnum $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
-        return UserForm::make($schema);
+        return UserForm::configure($schema);
     }
 
     public static function table(Table $table): Table
