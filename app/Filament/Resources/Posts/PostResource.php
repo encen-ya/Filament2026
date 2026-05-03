@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use BackedEnum;
+use App\Filament\Resources\Posts\RelationManagers\TagsRelationManager;
 
 
 class PostResource extends Resource
@@ -36,7 +37,7 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TagsRelationManager::class,
         ];
     }
 

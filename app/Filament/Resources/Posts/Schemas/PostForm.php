@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Models\Category;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
@@ -26,6 +27,9 @@ class PostForm
                 ->description('Fill in the details of the post')
                 ->icon('heroicon-o-document-text')
                 ->schema([
+                Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->searchable(),
 
                     Group::make([
                         TextInput::make('title')
@@ -43,7 +47,8 @@ class PostForm
                         ]),
                         Select::make('category_id')
                         ->relationship('category', 'name')
-                        ->preload()
+                        ->options(Category::all()->pluck('name', 'id'))
+                        // ->preload()
                         ->required()
                         ->searchable(),
                         ColorPicker::make('color'),
@@ -67,12 +72,17 @@ class PostForm
                 Section::make('Meta Information')
                 ->icon('heroicon-o-information-circle')
                 ->schema([
-                TagsInput::make('tags'),
-                Checkbox::make('is_published'),
+                // TagsInput::make('tags'),
+                Select::make('tags')
+                    ->relationship('tags','name')
+                    ->multiple()
+                    ->preload(),
+                Checkbox::make('published')
+                ->label('Publish'), 
                 ])->columns(2),
                 ]),
                 
                 DateTimePicker::make('published_at'),
                 ])->columns(2);
-    } 
+    }
 } 
